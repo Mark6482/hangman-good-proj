@@ -20,7 +20,7 @@ window.addEventListener('click', (e) => {
 
         console.log("err count =Z ", errCount)
 
-        if(errCount >= 7) {window.alert("you failed yo!"); location.reload() }
+        if(errCount >= 7) {window.alert("Ты проиграл:("); location.reload() }
 
         // else {
 
@@ -48,7 +48,7 @@ window.addEventListener('click', (e) => {
                 })
             }
             if(wordLetters.length===0){
-                alert("you won!")
+                alert("Ты выиграл!")
                 location.reload()
             }
         })

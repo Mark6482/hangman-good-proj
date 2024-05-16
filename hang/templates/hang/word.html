@@ -55,6 +55,9 @@
                         </li>
                         {% endif %}
                         <li class="nav-item">
+                            <a class="nav-link" href="{% url 'hang:word_frequency' %}">Help</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="{% url 'users:logout' %}">Exit</a>
                         </li>
                     </ul>
@@ -120,35 +123,20 @@
         <script>
             let errCount = 0;
             let wordVisibility = false;
-
-            // const btn = document.querySelector('.red-btn')
             const word = document.querySelector('.display-word').textContent
             const displayBtn = document.querySelector('.display-btn')
             const hangmanContainer = document.querySelector('.hangman-container')
-
-            // hangmanContainer.style.backgroundImage = "url('assets/hangman-1.png')";
-
             const wordLetters = word.split("")
             console.log(wordLetters)
-
             window.addEventListener('click', (e) => {
 
                 if (e.target.classList.contains('ltr-btn') && e.target.classList.contains('active')) {
 
                     e.target.classList.add('passive')
                     e.target.classList.remove('active')
-
                     console.log("err count =Z ", errCount)
 
-                    if (errCount >= 7) { window.alert("you failed yo!"); location.reload() }
-
-                    // else {
-
-                    // errCount += 1
-                    // console.log("err count => ", errCount)
-                    // hangmanImg = document.querySelector('.hangman-img')
-                    // hangmanImg.src = `"{% static 'hang/hangman-${errCount}.png' %}"`
-                    // }
+                    if (errCount >= 7) { window.alert("Ты проиграл:("); location.reload() }
 
                     let found = false;
                     wordLetters.forEach(l => {
@@ -168,7 +156,7 @@
                             })
                         }
                         if (wordLetters.length === 0) {
-                            alert("you won!")
+                            alert("Ты выиграл!")
                             location.reload()
                         }
                     })

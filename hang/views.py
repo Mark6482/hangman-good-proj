@@ -8,12 +8,9 @@ from .models import Word, Category
 from .forms import WordForm, CategoryForm
 import random
 from django.urls import reverse
+from .myrandom import MersenneTwister
+from .analysisrus import russian_alphabet_frequency_analysis
 
-class TestView(TemplateView):
-    template_name = "test"
-
-    def get(self, request, *args, **kwargs) -> HttpResponse:
-        return render(request, 'hang/test.html')
 
 
 class HomeView(TemplateView):
@@ -145,15 +142,39 @@ class WordEditView(DetailView):
             return HttpResponseRedirect(reverse('hang:words'))            
 
 
+# class WordVie(DetailView):
+#     template_name = "word-picked"
+    
+#     def get(self, request, *args, **kwargs):
+#         words = Word.objects.filter(category=kwargs["id"])
+#         random_word = random.choice(words)
+#         context = {'random_word': random_word}
+#         return render(request, 'hang/word.html', context)
+    
+
 class WordView(DetailView):
     template_name = "word-picked"
     
     def get(self, request, *args, **kwargs):
         words = Word.objects.filter(category=kwargs["id"])
-        random_word = random.choice(words)
+        # Инициализируем MersenneTwister с seed, например, текущим временем
+        mt = MersenneTwister(seed=None)
+        # Получаем случайное слово, используя MersenneTwister
+        random_word = words[mt.extract_number() % len(words)]
         context = {'random_word': random_word}
         return render(request, 'hang/word.html', context)
 
 def index(request):
     return render(request, 'hang/index.html')
+
+def word_frequency_view(request):
+    # Вызываем функцию частотного анализа для слов из базы данных
+    sorted_frequency = russian_alphabet_frequency_analysis()
+
+    # Передаем результаты частотного анализа в шаблон для отображения
+    context = {
+        'sorted_frequency': sorted_frequency
+    }
+
+    return render(request, 'hang/analysisrus.html', context)
 

@@ -2,7 +2,7 @@
 
 body {
     font-family: Michroma, serif;
-    background: linear-gradient(90deg, #d0cdcd 0%, #f68888 100%);
+    background: linear-gradient(90deg, #fff1f1 0%, #f68888 100%);
 }
 
 p {
@@ -46,4 +46,12 @@ a {
 
 .call-anim {
     animation: call 2s ease 0s infinite normal forwards;
+}
+
+.letter {
+    text-decoration: none;
+}
+
+.letters {
+    text-decoration: none;
 }
