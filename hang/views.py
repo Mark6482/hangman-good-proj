@@ -6,11 +6,12 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from .models import Word, Category
 from .forms import WordForm, CategoryForm
-import random
+from random import random
 from django.urls import reverse
 from .myrandom import MersenneTwister
 from .analysisrus import russian_alphabet_frequency_analysis
 from .search import kmp_search
+from .MiddleSquareMethod import MiddleSquareMethod
 
 
 
@@ -142,6 +143,10 @@ class WordEditView(DetailView):
 
             return HttpResponseRedirect(reverse('hang:words'))            
 
+def generate_random_numbers(request):
+    num = round(random() * 100)
+    context = {'random_numbers': num}
+    return render(request, 'hang/num.html', context)
 
 def search_words(request):
     if request.method == "POST":
@@ -198,3 +203,9 @@ def word_frequency_view(request):
 
     return render(request, 'hang/analysisrus.html', context)
 
+
+def generate_random_number(request):
+    rng = MiddleSquareMethod(seed=123456)
+    random_numbers = rng.generate(1)
+    context = {'random_numbers': random_numbers}
+    return render(request, 'hang/num.html', context)
