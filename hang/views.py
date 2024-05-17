@@ -10,6 +10,7 @@ import random
 from django.urls import reverse
 from .myrandom import MersenneTwister
 from .analysisrus import russian_alphabet_frequency_analysis
+from .search import kmp_search
 
 
 
@@ -141,6 +142,25 @@ class WordEditView(DetailView):
 
             return HttpResponseRedirect(reverse('hang:words'))            
 
+
+def search_words(request):
+    if request.method == "POST":
+        query = request.POST.get('query', '')
+        words = Word.objects.all()
+        matches = []
+        for word in words:
+            word_text = word.text.lower()
+            word_matches = kmp_search(word_text, query.lower())
+            if word_matches:
+                matches.append(word)
+        context = {
+            'matches': matches,
+            'query': query
+        }
+        return render(request, "admin.html", context)
+    else:
+        return render(request, "admin.html", {})
+    
 
 # class WordVie(DetailView):
 #     template_name = "word-picked"
