@@ -6,4 +6,4 @@ admin.site.register(Category)
 
 @admin.register(Word)
 class WordAdmin(admin.ModelAdmin):
-    search_fields = ('text',)
+    search_fields = ('text', )

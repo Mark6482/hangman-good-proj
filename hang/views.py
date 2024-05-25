@@ -205,7 +205,7 @@ def word_frequency_view(request):
 
 
 def generate_random_number(request):
-    rng = MiddleSquareMethod(seed=123456)
+    rng = MiddleSquareMethod(seed=random())
     random_numbers = rng.generate(1)
     context = {'random_numbers': random_numbers}
     return render(request, 'hang/num.html', context)
